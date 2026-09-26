@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mr. Nobody | Tech & Cyber Security</title>
+    <meta name="description" content="Mr. Nobody — Tech enthusiast, developer and cybersecurity researcher.">
+    <meta name="theme-color" content="#050505">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #050505;
+            color: #e8e8e8;
+            font-family: "Courier New", monospace;
+            overflow-x: hidden;
+        }
+
+        /* ===== MATRIX BACKGROUND ===== */
+
+        #matrix {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            opacity: 0.12;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            background:
+                radial-gradient(
+                    circle at center,
+                    transparent 0%,
+                    rgba(0,0,0,.35) 55%,
+                    rgba(0,0,0,.9) 100%
+                );
+        }
+
+        /* ===== SCANLINES ===== */
+
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 999;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 3px,
+                rgba(255,255,255,.015) 4px
+            );
+        }
+
+        /* ===== NAVBAR ===== */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: rgba(5,5,5,.82);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid #1d1d1d;
+            z-index: 100;
+        }
+
+        .logo {
+            color: #fff;
+            font-weight: bold;
+            letter-spacing: 3px;
+            font-size: 17px;
+        }
+
+        .logo span {
+            color: #777;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            color: #888;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .25s;
+        }
+
+        nav a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px #fff;
+        }
+
+        /* ===== GENERAL ===== */
+
+        section {
+            width: 100%;
+            max-width: 1100px;
+            margin: auto;
+            padding: 110px 25px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 4px;
+            margin-bottom: 35px;
+        }
+
+        .section-title::before {
+            content: "// ";
+            color: #555;
+        }
+
+        /* ===== HERO ===== */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+
+        .hero-content {
+            max-width: 850px;
+        }
+
+        .terminal-line {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .terminal-line span {
+            color: #aaa;
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 12vw, 125px);
+            letter-spacing: 8px;
+            color: #fff;
+            margin-bottom: 12px;
+            text-shadow:
+                0 0 10px rgba(255,255,255,.25),
+                0 0 35px rgba(255,255,255,.08);
+            animation: flicker 5s infinite;
+        }
+
+        .subtitle {
+            color: #777;
+            font-size: 14px;
+            letter-spacing: 5px;
+            margin-bottom: 35px;
+        }
+
+        .typing {
+            color: #aaa;
+            min-height: 25px;
+            font-size: 15px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 17px;
+            background: #aaa;
+            margin-left: 4px;
+            animation: blink .8s infinite;
+            vertical-align: middle;
+        }
+
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 22px;
+            border: 1px solid #444;
+            color: #ddd;
+            text-decoration: none;
+            font-size: 13px;
+            transition: .25s;
+            background: rgba(255,255,255,.02);
+        }
+
+        .btn:hover {
+            border-color: #aaa;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,.08);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ABOUT ===== */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 45px;
+        }
+
+        .terminal {
+            border: 1px solid #222;
+            background: rgba(8,8,8,.8);
+            padding: 22px;
+            box-shadow: 0 0 30px rgba(0,0,0,.5);
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 7px;
+            margin-bottom: 20px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: #555;
+        }
+
+        .terminal p {
+            color: #888;
+            line-height: 1.8;
+            font-size: 13px;
+        }
+
+        .terminal .white {
+            color: #ddd;
+        }
+
+        .about-text {
+            color: #999;
+            line-height: 1.9;
+            font-size: 14px;
+        }
+
+        .about-text strong {
+            color: #eee;
+        }
+
+        /* ===== SKILLS ===== */
+
+        .skills {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .skill {
+            border: 1px solid #202020;
+            padding: 18px;
+            background: rgba(10,10,10,.75);
+            transition: .25s;
+        }
+
+        .skill:hover {
+            border-color: #555;
+            transform: translateX(4px);
+        }
+
+        .skill-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+        }
+
+        .skill-name {
+            color: #ddd;
+        }
+
+        .skill-percent {
+            color: #666;
+        }
+
+        .bar {
+            height: 3px;
+            background: #1c1c1c;
+            overflow: hidden;
+        }
+
+        .bar span {
+            display: block;
+            height: 100%;
+            background: #aaa;
+            width: 0;
+            transition: width 1.3s ease;
+        }
+
+        /* ===== CYBER ===== */
+
+        .cyber-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .cyber-card {
+            padding: 25px;
+            border: 1px solid #222;
+            background: rgba(8,8,8,.75);
+            transition: .3s;
+        }
+
+        .cyber-card:hover {
+            border-color: #666;
+            box-shadow: 0 0 25px rgba(255,255,255,.04);
+        }
+
+        .cyber-number {
+            color: #444;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .cyber-card h3 {
+            font-size: 15px;
+            margin-bottom: 12px;
+            color: #ddd;
+        }
+
+        .cyber-card p {
+            color: #777;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* ===== PROJECTS ===== */
+
+        .projects {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .project {
+            border: 1px solid #222;
+            padding: 25px;
+            background: rgba(8,8,8,.8);
+            transition: .3s;
+        }
+
+        .project:hover {
+            border-color: #555;
+            transform: translateY(-3px);
+        }
+
+        .project h3 {
+            font-size: 16px;
+            color: #ddd;
+            margin-bottom: 12px;
+        }
+
+        .project p {
+            color: #777;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .tag {
+            display: inline-block;
+            border: 1px solid #292929;
+            padding: 5px 8px;
+            margin: 3px;
+            font-size: 10px;
+            color: #777;
+        }
+
+        /* ===== TERMINAL STATUS ===== */
+
+        .status-box {
+            border: 1px solid #222;
+            background: #070707;
+            padding: 25px;
+            font-size: 13px;
+            line-height: 2;
+        }
+
+        .status-box .green {
+            color: #aaa;
+        }
+
+        .status-box .dim {
+            color: #555;
+        }
+
+        /* ===== FOOTER ===== */
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid #181818;
+            color: #555;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        footer strong {
+            color: #aaa;
+        }
+
+        /* ===== ANIMATIONS ===== */
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 63%, 64%, 100% {
+                opacity: 1;
+            }
+
+            20%, 62% {
+                opacity: .8;
+            }
+        }
+
+        /* ===== MOBILE ===== */
+
+        @media (max-width: 750px) {
+
+            nav {
+                padding: 0 20px;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            section {
+                padding: 85px 20px;
+            }
+
+            .hero h1 {
+                letter-spacing: 4px;
+            }
+
+            .subtitle {
+                letter-spacing: 3px;
+            }
+
+            .about-grid,
+            .skills,
+            .projects {
+                grid-template-columns: 1fr;
+            }
+
+            .cyber-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+<div class="overlay"></div>
+
+<!-- NAVIGATION -->
+
+<nav>
+    <div class="logo">MR.<span>NOBODY</span></div>
+
+    <ul>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#skills">SKILLS</a></li>
+        <li><a href="#cyber">CYBER</a></li>
+        <li><a href="#projects">PROJECTS</a></li>
+    </ul>
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="terminal-line">
+            [ SYSTEM ] <span>connection established...</span>
+        </div>
+
+        <h1>MR. NOBODY</h1>
+
+        <div class="subtitle">
+            TECH • CODE • CYBER SECURITY
+        </div>
+
+        <div class="typing">
+            <span id="typing"></span><span class="cursor"></span>
+        </div>
+
+        <div class="buttons">
+            <a href="#about" class="btn">[ ABOUT ME ]</a>
+            <a href="#skills" class="btn">[ SKILLS ]</a>
+            <a href="#cyber" class="btn">[ SECURITY ]</a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <div class="section-title">
+        ABOUT ME
+    </div>
+
+    <div class="about-grid">
+
+        <div class="terminal">
+
+            <div class="terminal-header">
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+
+            <p>
+                <span class="white">$ whoami</span>
+                <br><br>
+                Mr. Nobody
+                <br><br>
+
+                <span class="white">$ status</span>
+                <br><br>
+                Learning...
+                <br>
+                Building...
+                <br>
+                Researching...
+                <br>
+                Improving...
+            </p>
+
+        </div>
+
+
+        <div class="about-text">
+
+            <p>
+                I'm <strong>Mr. Nobody</strong>, a technology enthusiast,
+                developer, and cybersecurity learner.
+            </p>
+
+            <br>
+
+            <p>
+                I enjoy creating software, websites, tools, and
+                experimental projects while learning how modern
+                systems and applications work.
+            </p>
+
+            <br>
+
+            <p>
+                My interests include programming, web development,
+                cybersecurity, system engineering, automation,
+                and security research.
+            </p>
+
+            <br>
+
+            <p>
+                I prefer working behind the scenes.
+                <strong>No spotlight. Just technology.</strong>
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SKILLS -->
+
+<section id="skills">
+
+    <div class="section-title">
+        SKILLS
+    </div>
+
+    <div class="skills">
+
+        <div class="skill">
+            <div class="skill-top">
+                <span class="skill-name">C++</span>
+                <span class="skill-percent">ADVANCED</span>
+            </div>
+            <div class="bar"><span data-width="88%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-top">
+                <span class="skill-name">C#</span>
+                <span class="skill-percent">ADVANCED</span>
+            </div>
+            <div class="bar"><span data-width="82%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-top">
+                <span class="skill-name">Python</span>
+                <span class="skill-percent">ADVANCED</span>
+            </div>
+            <div class="bar"><span data-width="91%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-top">
+                <span class="skill-name">JavaScript</span>
+                <span class="skill-percent">ADVANCED</span>
+            </div>
+            <div class="bar"><span data-width="87%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-top">
+                <span class="skill-name">Java</span>
+                <span class="skill-percent">INTERMEDIATE</span>
+            </div>
+            <div class="bar"><span data-width="76%"></span></div>
+        </div>
+
+        <div class="skill">
+            <div class="skill-top">
+                <span class="skill-name">HTML / CSS</span>
+                <span class="skill-percent">ADVANCED</span>
+            </div>
+            <div class="bar"><span data-width="94%"></span></div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CYBER SECURITY -->
+
+<section id="cyber">
+
+    <div class="section-title">
+        CYBER SECURITY
+    </div>
+
+    <div class="cyber-grid">
+
+        <div class="cyber-card">
+            <div class="cyber-number">01 /</div>
+            <h3>WEB SECURITY</h3>
+            <p>
+                Learning application security, common web
+                vulnerabilities, secure development, and
+                defensive techniques.
+            </p>
+        </div>
+
+        <div class="cyber-card">
+            <div class="cyber-number">02 /</div>
+            <h3>SECURITY RESEARCH</h3>
+            <p>
+                Exploring how systems work and researching
+                vulnerabilities in controlled and authorized
+                environments.
+            </p>
+        </div>
+
+        <div class="cyber-card">
+            <div class="cyber-number">03 /</div>
+            <h3>OSINT</h3>
+            <p>
+                Interested in open-source intelligence,
+                information gathering, and digital investigation.
+            </p>
+        </div>
+
+        <div class="cyber-card">
+            <div class="cyber-number">04 /</div>
+            <h3>AUTOMATION</h3>
+            <p>
+                Building scripts and tools to automate repetitive
+                technical and security-related tasks.
+            </p>
+        </div>
+
+        <div class="cyber-card">
+            <div class="cyber-number">05 /</div>
+            <h3>SECURE CODING</h3>
+            <p>
+                Interested in writing software with security,
+                privacy, and reliability in mind.
+            </p>
+        </div>
+
+        <div class="cyber-card">
+            <div class="cyber-number">06 /</div>
+            <h3>NETWORKING</h3>
+            <p>
+                Learning networking concepts, protocols,
+                infrastructure, and system communication.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROJECTS -->
+
+<section id="projects">
+
+    <div class="section-title">
+        PROJECTS & INTERESTS
+    </div>
+
+    <div class="projects">
+
+        <div class="project">
+
+            <h3>Cybersecurity Tools</h3>
+
+            <p>
+                Developing and experimenting with security-oriented
+                tools, scanners, automation, and analysis utilities
+                for authorized environments.
+            </p>
+
+            <span class="tag">PYTHON</span>
+            <span class="tag">NODE.JS</span>
+            <span class="tag">SECURITY</span>
+
+        </div>
+
+
+        <div class="project">
+
+            <h3>Web Development</h3>
+
+            <p>
+                Creating modern websites and web applications
+                with interactive interfaces and backend systems.
+            </p>
+
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JAVASCRIPT</span>
+
+        </div>
+
+
+        <div class="project">
+
+            <h3>Software Development</h3>
+
+            <p>
+                Building experimental software and learning
+                different programming languages and development
+                environments.
+            </p>
+
+            <span class="tag">C++</span>
+            <span class="tag">C#</span>
+            <span class="tag">JAVA</span>
+
+        </div>
+
+
+        <div class="project">
+
+            <h3>System & Automation</h3>
+
+            <p>
+                Exploring Linux, scripting, automation, system
+                tools, and ways to make technical workflows more
+                efficient.
+            </p>
+
+            <span class="tag">LINUX</span>
+            <span class="tag">PYTHON</span>
+            <span class="tag">AUTOMATION</span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATUS -->
+
+<section>
+
+    <div class="section-title">
+        SYSTEM STATUS
+    </div>
+
+    <div class="status-box">
+
+        <span class="dim">$ ./status</span>
+        <br>
+
+        identity:
+        <span class="green">Mr. Nobody</span>
+
+        <br>
+
+        role:
+        <span class="green">Developer / Cybersecurity Enthusiast</span>
+
+        <br>
+
+        mode:
+        <span class="green">LEARNING</span>
+
+        <br>
+
+        visibility:
+        <span class="green">ANONYMOUS</span>
+
+        <br>
+
+        status:
+        <span class="green">ONLINE</span>
+
+        <br><br>
+
+        <span class="dim">
+            // Stay curious. Keep learning. Keep building.
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <strong>MR. NOBODY</strong>
+    <br><br>
+
+    ANONYMOUS BY CHOICE • CURIOUS BY NATURE
+
+    <br><br>
+
+    © <span id="year"></span> Mr. Nobody
+
+</footer>
+
+
+<script>
+
+    /* ===== TYPING EFFECT ===== */
+
+    const texts = [
+        "Anonymous by choice. Curious by nature.",
+        "Building software and exploring technology.",
+        "Learning cybersecurity and secure development.",
+        "Code. Research. Learn. Repeat."
+    ];
+
+    let textIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    const typing = document.getElementById("typing");
+
+    function typeEffect() {
+
+        const current = texts[textIndex];
+
+        if (!deleting) {
+
+            typing.textContent = current.substring(0, charIndex + 1);
+            charIndex++;
+
+            if (charIndex === current.length) {
+                deleting = true;
+
+                setTimeout(typeEffect, 1800);
+                return;
+            }
+
+        } else {
+
+            typing.textContent = current.substring(0, charIndex - 1);
+            charIndex--;
+
+            if (charIndex === 0) {
+                deleting = false;
+                textIndex++;
+
+                if (textIndex >= texts.length) {
+                    textIndex = 0;
+                }
+            }
+        }
+
+        setTimeout(typeEffect, deleting ? 35 : 65);
+    }
+
+    typeEffect();
+
+
+    /* ===== YEAR ===== */
+
+    document.getElementById("year").textContent =
+        new Date().getFullYear();
+
+
+    /* ===== SKILL BARS ===== */
+
+    const bars = document.querySelectorAll(".bar span");
+
+    const observer = new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if (entry.isIntersecting) {
+
+                    const width =
+                        entry.target.getAttribute("data-width");
+
+                    entry.target.style.width = width;
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.4
+        }
+    );
+
+    bars.forEach(bar => observer.observe(bar));
+
+
+    /* ===== MATRIX ===== */
+
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    let width;
+    let height;
+    let columns;
+    let drops;
+
+    const characters =
+        "01ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&<>/\\[]{}";
+
+    function resizeMatrix() {
+
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+
+        const fontSize = 14;
+
+        columns = Math.floor(width / fontSize);
+
+        drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = Math.random() * -100;
+        }
+    }
+
+    resizeMatrix();
+
+    window.addEventListener("resize", resizeMatrix);
+
+    function drawMatrix() {
+
+        ctx.fillStyle = "rgba(5, 5, 5, 0.08)";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = "#888";
+        ctx.font = "14px monospace";
+
+        for (let i = 0; i < drops.length; i++) {
+
+            const char =
+                characters[
+                    Math.floor(
+                        Math.random() * characters.length
+                    )
+                ];
+
+            ctx.fillText(
+                char,
+                i * 14,
+                drops[i] * 14
+            );
+
+            if (
+                drops[i] * 14 > height &&
+                Math.random() > 0.975
+            ) {
+                drops[i] = 0;
+            }
+
+            drops[i] += 0.55;
+        }
+    }
+
+    setInterval(drawMatrix, 45);
+
+</script>
+
+</body>
+</html>
